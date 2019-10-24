@@ -52,7 +52,7 @@ for i in range(0, len(crossTable[1])):
         if cond1 or cond2:
             crossTable[1][i] += streams[3][j]
             names[i] += streams[0][j] + ' '
-            #print(crossTable[0][i], '\t', streams[0][j], '\t', streams[4][j], ' \t', streams[5][j], '  \t', i, j, '\t', cond1, cond2)
+            #print(crossTable[0][i], '\t', streams[0][j], '\t', Ts_n[j], ' \t', Tt_n[j], '  \t', i, j, '\t', cond1, cond2)
         j += 1
     i += 1
     
