@@ -34,13 +34,8 @@ for i in range(len(Tt_n)):
         tempList.append(Tt_n[i])
             
 tempList.sort(reverse=True)
-
-print(tempList)
-
-crossTable =  [[0] * len(tempList) ] * 4
-crossTable[2] = [''] * len(tempList)
-crossTable[0] = tempList
 names = [''] * len(tempList)
+SmCp = [0] * len(tempList)
 
 for i in range(0, len(crossTable[1])):
     for j in range(0, len(streams[1])):
@@ -50,9 +45,9 @@ for i in range(0, len(crossTable[1])):
         cond2 = (Tt_n[j] > Ts_n[j]) and (Tt_n[j] >= tempList[i]) and (Ts_n[j] < tempList[i])
         
         if cond1 or cond2:
-            crossTable[1][i] += streams[3][j]
+            SmCp[i] += streams[3][j]
             names[i] += streams[0][j] + ' '
-            #print(crossTable[0][i], '\t', streams[0][j], '\t', Ts_n[j], ' \t', Tt_n[j], '  \t', i, j, '\t', cond1, cond2)
+            #print(tempList[i], '\t', streams[0][j], '\t', Ts_n[j], ' \t', Tt_n[j], '  \t', i, j, '\t', cond1, cond2)
         j += 1
     i += 1
     
@@ -62,21 +57,18 @@ H  = [0] * len(tempList)
 Hs = [0] * len(tempList)
 
 for i in range(1, len(dT)):
-    dT[i-1] = crossTable[0][i-1] - crossTable[0][i]
+    dT[i-1] = tempList[i-1] - tempList[i]
     i+=1
     
 for i in range(0, len(dT)):
-    dH[i] = crossTable[1][i] * dT[i] 
+    dH[i] = SmCp[i] * dT[i] 
     i+=1
 
 H[0] = 0
 for i in range(0, len(dT)-1):
     H[i+1] = H[i] + dH[i]     
 
-mindex = H.index(min(H))
-    
-print("Pinch Temperature: ", tempList[mindex])
-
+mindex = H.index(min(H))  
 Hs[mindex] = 0
 
 for i in range(mindex-1, -1, -1):
@@ -84,6 +76,19 @@ for i in range(mindex-1, -1, -1):
     
 for i in range(mindex+1, len(Hs)):
     Hs[i] = Hs[i-1] + dH[i-1]
-    
+
+print('source temps: ', Ts_n)
+print('target temps: ', Tt_n)
+
+print('\ntemp cascade: ', tempList)
+print('\nSum of mCps: ', SmCp)
+print('\ntemp change: ', dT)
+print('\ndelta H: ', dH)
+print('\nH: ', H)
+print('\nHs: ', Hs)
+
+print('\n\n', names)
+
+print("\nPinch Temperature: ", tempList[mindex])
 print("Minimum Hot Utility: ", Hs[0])
 print("Minimum Hot Utility: ", Hs[-1])
