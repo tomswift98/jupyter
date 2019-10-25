@@ -91,4 +91,4 @@ print('\n\n', names)
 
 print("\nPinch Temperature: ", tempList[mindex])
 print("Minimum Hot Utility: ", Hs[0])
-print("Minimum Hot Utility: ", Hs[-1])
+print("Minimum Cold Utility: ", Hs[-1])
